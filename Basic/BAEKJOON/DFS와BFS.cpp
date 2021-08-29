@@ -6,11 +6,12 @@
 // https://www.acmicpc.net/problem/1260
 
 #include <stdio.h>
-#include<iostream>
+#include <iostream>
 #include <vector>
 #include <unordered_map>
 #include <algorithm>
 #include <queue>
+#include <set>
 
 using namespace std;
 
@@ -30,8 +31,9 @@ int main(){
     int u;
     int v;
     
-    vector<vector<int>> adj(M+1);
-    vector<vector<int>> adj2(M+1);
+    vector<vector<int>> adj(M);
+    vector<vector<int>> adj2(M);
+    set<int> index;
     
     for (int i = 0;i < M;i++){
         cin>>u;
@@ -41,33 +43,22 @@ int main(){
         adj[v].push_back(u);
         adj2[u].push_back(v);
         adj2[v].push_back(u);
+        index.insert(u);
+        index.insert(v);
     }
-    
-    
-//    // sort number order for convenience
-    for (int i = 1; i<=N; i++){
+
+    cout<<"size: "<<index.size()<<endl;
+
+   // sort number order for convenience
+    for (auto i: index){
         sort(adj[i].begin(),adj[i].end(),less<int>());
     }
 
-    for (int i = 1; i<=N; i++){
+    for (auto i: index){
         sort(adj2[i].begin(),adj2[i].end(),greater<int>());
     }
-    
-//    for (int i = 0; i <= N; i++)
-//        {
-//            cout<< i << ": ";
-//
-//            for (int j = 0; j < adj2[i].size(); j++)
-//            {
-//                cout << adj2[i][j] << " ";
-//            }
-//            cout << endl;
-//        }
-
-//    cout<<"size: "<<adj.size()<<endl;
 
 // DFS
-
     // initialize stack with start point
     vector<int> answer_dfs;
     vector<int> s = {V};
@@ -94,7 +85,7 @@ int main(){
     for (int i = 0; i < answer_dfs.size(); i++)
         cout<<answer_dfs[i]<< " ";
     
-    cout<<endl;
+    cout<<"\n";
 
     // DFS
 
@@ -120,7 +111,7 @@ int main(){
     for (int i = 0; i < answer_bfs.size(); i++)
         cout<<answer_bfs[i]<< " ";
     
-    cout<<endl;
+    cout<<"\n";
     
     return 0;
 }
